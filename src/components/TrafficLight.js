@@ -10,15 +10,19 @@ const GREEN = 2;
 class TrafficLight extends Component{
     constructor(){
         super();
-        this.currentColor = RED;
+        this.state = {
+            currentColor: GREEN
+        };
 
         setInterval(() => {
-            this.currentColor = this.getNExtColor(this.currentColor);
+            this.setState({
+                currentColor: this.getNextColor(this.state.currentColor)
+            });
         }, 1000);
 
     };
 
-    getNExtColor(color){
+    getNextColor(color){
         switch(color){
             case RED:
                 return YELL;
@@ -30,12 +34,19 @@ class TrafficLight extends Component{
     };
 
     render(){
+        const { currentColor } = this.state;
+
+        console.log(currentColor)
         return <div className="TrafficLight">
             <div className={ classNames('bulb', 'red', {
-                active: this.currentColor === RED
+                active: currentColor === RED
             })} />
-            <div className="bulb yellow" />
-            <div className="bulb green" />
+            <div className={ classNames('bulb', 'yellow', {
+                active: currentColor === YELL
+            })} />
+            <div className={ classNames('bulb', 'green', {
+                active: currentColor === GREEN
+            })} />
         </div>
     };
 };
